@@ -1,6 +1,7 @@
 namespace Microsoft.Ilasm
 {
     using System;
+    using System.Collections.Generic;
 
     internal class Scanner
     {
@@ -31,13 +32,21 @@ namespace Microsoft.Ilasm
             {
                 this.m_token = Token.Eof;
             }
-            string dotAssembly = ".assembly";
-            if ((this.m_position + dotAssembly.Length) <= this.m_text.Length)
+            var keywords = new KeyValuePair<Token, string>[]
             {
-                if (this.m_text.Substring(this.m_position, dotAssembly.Length).Equals(dotAssembly))
+                new KeyValuePair<Token, string>(Token.Assembly, ".assembly"),
+                new KeyValuePair<Token, string>(Token.Extern, "extern")
+            };
+            foreach (var pair in keywords)
+            {
+                string keyword = pair.Value;
+                if ((this.m_position + keyword.Length) <= this.m_text.Length)
                 {
-                    this.m_position += dotAssembly.Length;
-                    this.m_token = Token.Assembly;
+                    if (this.m_text.Substring(this.m_position, keyword.Length).Equals(keyword))
+                    {
+                        this.m_position += keyword.Length;
+                        this.m_token = pair.Key;
+                    }
                 }
             }
         }

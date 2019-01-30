@@ -3,6 +3,7 @@
     internal enum Token
     {
         Assembly,
+        Extern,
         Eof
     }
 }

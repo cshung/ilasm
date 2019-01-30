@@ -52,6 +52,8 @@ namespace Microsoft.Ilasm.Tests
         {
             Scanner scanner = new Scanner(sampleFile);
             Assert.Equal(Token.Assembly, scanner.Token);
+            scanner.Scan();
+            Assert.Equal(Token.Extern, scanner.Token);
         }
     }
 }
