@@ -2,7 +2,7 @@
 // <copyright file="Scanner.cs" company="CompanyName">
 //     Company copyright tag.
 // </copyright>
-// <summary>This is the Widget class.</summary>
+// <summary>This is the Scanner class.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm
@@ -101,6 +101,7 @@ namespace Microsoft.Ilasm
                     }
                 }
             }
+
             if (this.text[this.position] == '.')
             {
                 this.token = new Token(this.text, TokenType.Dot, this.position, this.position + 1);

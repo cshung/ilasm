@@ -2,7 +2,7 @@
 // <copyright file="TokenType.cs" company="CompanyName">
 //     Company copyright tag.
 // </copyright>
-// <summary>This is the Widget class.</summary>
+// <summary>This is the TokenType enumeration.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm
@@ -48,7 +48,7 @@ namespace Microsoft.Ilasm
         Module,
 
         /// <summary>
-        /// The dot.
+        /// The dot operator.
         /// </summary>
         Dot,
 

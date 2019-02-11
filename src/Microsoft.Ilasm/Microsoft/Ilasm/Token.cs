@@ -2,7 +2,7 @@
 // <copyright file="Token.cs" company="CompanyName">
 //     Company copyright tag.
 // </copyright>
-// <summary>This is the Widget class.</summary>
+// <summary>This is the Token class.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm

@@ -2,7 +2,7 @@
 // <copyright file="AssemblyInfo.cs" company="CompanyName">
 //     Company copyright tag.
 // </copyright>
-// <summary>This is the Widget class.</summary>
+// <summary>This is the AssemblyInfo file.</summary>
 //-----------------------------------------------------------------------
 
 using System.Runtime.CompilerServices;
