@@ -80,6 +80,15 @@ namespace Microsoft.Ilasm.Tests
             scanner.Scan();
             Assert.Equal(TokenType.Id, scanner.Token.TokenType);
             Assert.Equal("exe", scanner.Token.TokenText);
+            scanner.Scan();
+            Assert.Equal(TokenType.NameSpace, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Id, scanner.Token.TokenType);
+            Assert.Equal("Hello", scanner.Token.TokenText);
+            scanner.Scan();
+            Assert.Equal(TokenType.Lbrace, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Class, scanner.Token.TokenType);
         }
 
     }

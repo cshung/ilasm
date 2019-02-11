@@ -85,6 +85,8 @@ namespace Microsoft.Ilasm
                 new KeyValuePair<TokenType, string>(TokenType.Lbrace, "{"),
                 new KeyValuePair<TokenType, string>(TokenType.Rbrace, "}"),
                 new KeyValuePair<TokenType, string>(TokenType.Module, ".module"),
+                new KeyValuePair<TokenType, string>(TokenType.NameSpace, ".namespace"),
+                new KeyValuePair<TokenType, string>(TokenType.Class, ".class"),
             };
             foreach (var pair in simpleTokens)
             {

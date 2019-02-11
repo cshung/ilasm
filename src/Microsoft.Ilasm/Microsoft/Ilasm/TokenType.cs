@@ -50,6 +50,16 @@ namespace Microsoft.Ilasm
         /// <summary>
         /// The dot.
         /// </summary>
-        Dot
+        Dot,
+
+        /// <summary>
+        /// The namespace.
+        /// </summary>
+        NameSpace,
+
+        /// <summary>
+        /// The class.
+        /// </summary>
+        Class
     }
 }
