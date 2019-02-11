@@ -44,16 +44,19 @@ namespace Microsoft.Ilasm.Tests
         public void TestLeadingSpace()
         {
             Scanner scanner = new Scanner("    .assembly");
-            Assert.Equal(Token.Assembly, scanner.Token);
+            Assert.Equal(TokenType.Assembly, scanner.Token.TokenType);
         }
 
         [Fact]
         public void TestScanningSample()
         {
             Scanner scanner = new Scanner(sampleFile);
-            Assert.Equal(Token.Assembly, scanner.Token);
+            Assert.Equal(TokenType.Assembly, scanner.Token.TokenType);
             scanner.Scan();
-            Assert.Equal(Token.Extern, scanner.Token);
+            Assert.Equal(TokenType.Extern, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal("mscorlib", scanner.Token.TokenText);
+            Assert.Equal(TokenType.Id, scanner.Token.TokenType);
         }
     }
 }
