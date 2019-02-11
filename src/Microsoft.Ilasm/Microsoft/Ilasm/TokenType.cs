@@ -30,6 +30,26 @@ namespace Microsoft.Ilasm
         /// <summary>
         /// The end of file.
         /// </summary>
-        Eof
+        Eof,
+
+        /// <summary>
+        /// The right brace.
+        /// </summary>
+        Rbrace,
+
+        /// <summary>
+        /// The left brace.
+        /// </summary>
+        Lbrace,
+
+        /// <summary>
+        /// The module.
+        /// </summary>
+        Module,
+
+        /// <summary>
+        /// The dot.
+        /// </summary>
+        Dot
     }
 }

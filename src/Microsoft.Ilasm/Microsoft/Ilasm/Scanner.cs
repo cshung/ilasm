@@ -77,12 +77,16 @@ namespace Microsoft.Ilasm
                 this.token = new Token(this.text, TokenType.Eof, this.position, this.position);
             }
 
-            var keywords = new KeyValuePair<TokenType, string>[]
+            // It is important that these simple tokens are not prefix of each other
+            var simpleTokens = new KeyValuePair<TokenType, string>[]
             {
                 new KeyValuePair<TokenType, string>(TokenType.Assembly, ".assembly"),
-                new KeyValuePair<TokenType, string>(TokenType.Extern, "extern")
+                new KeyValuePair<TokenType, string>(TokenType.Extern, "extern"),
+                new KeyValuePair<TokenType, string>(TokenType.Lbrace, "{"),
+                new KeyValuePair<TokenType, string>(TokenType.Rbrace, "}"),
+                new KeyValuePair<TokenType, string>(TokenType.Module, ".module"),
             };
-            foreach (var pair in keywords)
+            foreach (var pair in simpleTokens)
             {
                 string keyword = pair.Value;
                 if ((this.position + keyword.Length) <= this.text.Length)
@@ -94,6 +98,12 @@ namespace Microsoft.Ilasm
                         return;
                     }
                 }
+            }
+            if (this.text[this.position] == '.')
+            {
+                this.token = new Token(this.text, TokenType.Dot, this.position, this.position + 1);
+                this.position += 1;
+                return;
             }
 
             if (this.IsIdBeginCharacter(this.text[this.position]))

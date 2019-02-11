@@ -54,9 +54,33 @@ namespace Microsoft.Ilasm.Tests
             Assert.Equal(TokenType.Assembly, scanner.Token.TokenType);
             scanner.Scan();
             Assert.Equal(TokenType.Extern, scanner.Token.TokenType);
-            scanner.Scan();
-            Assert.Equal("mscorlib", scanner.Token.TokenText);
+            scanner.Scan();            
             Assert.Equal(TokenType.Id, scanner.Token.TokenType);
+            Assert.Equal("mscorlib", scanner.Token.TokenText);
+            scanner.Scan();
+            Assert.Equal(TokenType.Lbrace, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Rbrace, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Assembly, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Id, scanner.Token.TokenType);
+            Assert.Equal("HelloWorld", scanner.Token.TokenText);
+            scanner.Scan();
+            Assert.Equal(TokenType.Lbrace, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Rbrace, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Module, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Id, scanner.Token.TokenType);
+            Assert.Equal("HelloWorld", scanner.Token.TokenText);
+            scanner.Scan();
+            Assert.Equal(TokenType.Dot, scanner.Token.TokenType);
+            scanner.Scan();
+            Assert.Equal(TokenType.Id, scanner.Token.TokenType);
+            Assert.Equal("exe", scanner.Token.TokenText);
         }
+
     }
 }
