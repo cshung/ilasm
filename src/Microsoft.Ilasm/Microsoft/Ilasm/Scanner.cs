@@ -1,16 +1,40 @@
+//-----------------------------------------------------------------------
+// <copyright file="Scanner.cs" company="CompanyName">
+//     Company copyright tag.
+// </copyright>
+// <summary>This is the Widget class.</summary>
+//-----------------------------------------------------------------------
+
 namespace Microsoft.Ilasm
 {
     using System;
     using System.Collections.Generic;
 
-    // It is intended to be an implementation of ECMA-335 (page 108+ is the specification of the ilasm grammar)
-    // The implementation sequence depends on the sample program I am trying to assemble
+    /// <summary>
+    /// The Scanner.
+    /// </summary>
     internal class Scanner
     {
-        private string m_text;
-        private int m_position;
-        private Token m_token;
+        /// <summary>
+        /// The text to be scanned.
+        /// </summary>
+        private string text;
 
+        /// <summary>
+        /// The position.
+        /// </summary>
+        private int position;
+
+        /// <summary>
+        /// The token.
+        /// </summary>
+        private Token token;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Scanner"/> class.
+        /// </summary>
+        /// <param name="text">The text to be scanned.</param>
+        /// <exception cref="ArgumentNullException">If the argument is null.</exception>
         internal Scanner(string text)
         {
             if (text == null)
@@ -18,22 +42,41 @@ namespace Microsoft.Ilasm
                 throw new ArgumentNullException(nameof(text));
             }
 
-            this.m_text = text;
-            this.m_position = 0;
-            this.m_token = null;
+            this.text = text;
+            this.position = 0;
+            this.token = null;
             this.Scan();
         }
 
+        /// <summary>
+        /// Gets the token.
+        /// </summary>
+        /// <value>
+        /// The token.
+        /// </value>
+        internal Token Token
+        {
+            get
+            {
+                return this.token;
+            }
+        }
+
+        /// <summary>
+        /// Scans this instance.
+        /// </summary>
         internal void Scan()
         {
-            while (this.m_position < this.m_text.Length && char.IsWhiteSpace(this.m_text[this.m_position]))
+            while (this.position < this.text.Length && char.IsWhiteSpace(this.text[this.position]))
             {
-                this.m_position++;
+                this.position++;
             }
-            if (this.m_position == this.m_text.Length)
+
+            if (this.position == this.text.Length)
             {
-                this.m_token = new Token(this.m_text, TokenType.Eof, this.m_position, this.m_position);
+                this.token = new Token(this.text, TokenType.Eof, this.position, this.position);
             }
+
             var keywords = new KeyValuePair<TokenType, string>[]
             {
                 new KeyValuePair<TokenType, string>(TokenType.Assembly, ".assembly"),
@@ -42,43 +85,47 @@ namespace Microsoft.Ilasm
             foreach (var pair in keywords)
             {
                 string keyword = pair.Value;
-                if ((this.m_position + keyword.Length) <= this.m_text.Length)
+                if ((this.position + keyword.Length) <= this.text.Length)
                 {
-                    if (this.m_text.Substring(this.m_position, keyword.Length).Equals(keyword))
+                    if (this.text.Substring(this.position, keyword.Length).Equals(keyword))
                     {
-                        this.m_token = new Token(this.m_text, pair.Key, this.m_position, this.m_position + keyword.Length);
-                        this.m_position += keyword.Length;
+                        this.token = new Token(this.text, pair.Key, this.position, this.position + keyword.Length);
+                        this.position += keyword.Length;
                         return;
                     }
                 }
             }
-            if (IsIdBeginCharacter(this.m_text[this.m_position]))
+
+            if (this.IsIdBeginCharacter(this.text[this.position]))
             {
-                int beginPosition = this.m_position;
+                int beginPosition = this.position;
                 do
                 {
-                    this.m_position++;
-                } while (IsIdCharacter(this.m_text[this.m_position]));
-                this.m_token = new Token(this.m_text, TokenType.Id, beginPosition, this.m_position);
+                    this.position++;
+                }
+                while (this.IsIdCharacter(this.text[this.position]));
+                this.token = new Token(this.text, TokenType.Id, beginPosition, this.position);
             }
         }
 
-        private bool IsIdCharacter(char v)
+        /// <summary>Determines whether [is identifier character] [the specified c].</summary>
+        /// <param name="c">The character to be tested.</param>
+        /// <returns>
+        ///   <c>true</c> if [is identifier character] [the specified c]; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsIdCharacter(char c)
         {
-            return ('0' <= v && v <= '9') || IsIdBeginCharacter(v);
+            return ('0' <= c && c <= '9') || this.IsIdBeginCharacter(c);
         }
 
-        private bool IsIdBeginCharacter(char v)
+        /// <summary>Determines whether [is identifier begin character] [the specified c].</summary>
+        /// <param name="c">The character to be tested.</param>
+        /// <returns>
+        ///   <c>true</c> if [is identifier begin character] [the specified c]; otherwise, <c>false</c>.
+        /// </returns>
+        private bool IsIdBeginCharacter(char c)
         {
-            return ('A' <= v && v <= 'Z') || ('a' <= v && v <= 'z') || v == '_' || v == '$' || v == '@' || v == '`' || v == '?';
-        }
-
-        internal Token Token
-        {
-            get
-            {
-                return this.m_token;
-            }
+            return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || c == '_' || c == '$' || c == '@' || c == '`' || c == '?';
         }
     }
 }

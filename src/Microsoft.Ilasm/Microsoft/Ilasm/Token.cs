@@ -1,33 +1,77 @@
-﻿namespace Microsoft.Ilasm
+﻿//-----------------------------------------------------------------------
+// <copyright file="Token.cs" company="CompanyName">
+//     Company copyright tag.
+// </copyright>
+// <summary>This is the Widget class.</summary>
+//-----------------------------------------------------------------------
+
+namespace Microsoft.Ilasm
 {
+    /// <summary>
+    /// The Token.
+    /// </summary>
     internal class Token
     {
-        private readonly TokenType m_tokenType;
-        private readonly string m_text;
-        private readonly int m_begin;
-        private readonly int m_end;
+        /// <summary>
+        /// The token type.
+        /// </summary>
+        private readonly TokenType tokenType;
 
+        /// <summary>
+        /// The source text.
+        /// </summary>
+        private readonly string text;
+
+        /// <summary>
+        /// The begin of the span.
+        /// </summary>
+        private readonly int begin;
+
+        /// <summary>
+        /// The end of the span.
+        /// </summary>
+        private readonly int end;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Token"/> class.
+        /// </summary>
+        /// <param name="text">The source text.</param>
+        /// <param name="tokenType">Type of the token.</param>
+        /// <param name="begin">The begin of the token.</param>
+        /// <param name="end">The end of the token.</param>
+        public Token(string text, TokenType tokenType, int begin, int end)
+        {
+            this.text = text;
+            this.tokenType = tokenType;
+            this.begin = begin;
+            this.end = end;
+        }
+
+        /// <summary>
+        /// Gets the type of the token.
+        /// </summary>
+        /// <value>
+        /// The type of the token.
+        /// </value>
         public TokenType TokenType
         {
             get
             {
-                return this.m_tokenType;
+                return this.tokenType;
             }
         }
 
-        public Token(string text, TokenType tokenType, int begin, int end)
-        {
-            this.m_text = text;
-            this.m_tokenType = tokenType;
-            this.m_begin = begin;
-            this.m_end = end;
-        }
-
+        /// <summary>
+        /// Gets the token text.
+        /// </summary>
+        /// <value>
+        /// The token text.
+        /// </value>
         public string TokenText
         {
             get
             {
-                return this.m_text.Substring(this.m_begin, this.m_end - this.m_begin);
+                return this.text.Substring(this.begin, this.end - this.begin);
             }
         }
     }
