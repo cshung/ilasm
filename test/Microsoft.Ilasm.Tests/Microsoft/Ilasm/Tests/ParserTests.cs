@@ -20,5 +20,14 @@
             }
             Assert.True(argNullThrown);
         }
+
+        [Fact]
+        public void ParseSample()
+        {
+            Scanner scanner = new Scanner(TestData.SampleFile);
+            Parser parser = new Parser(scanner);
+            parser.ParseDecl();
+            parser.ParseDecl();
+        }
     }
 }

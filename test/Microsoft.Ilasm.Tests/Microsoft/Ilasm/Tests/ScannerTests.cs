@@ -6,24 +6,6 @@ namespace Microsoft.Ilasm.Tests
 
     public class ScannerTests
     {
-        private static string sampleFile = @"
-.assembly extern mscorlib {}
-.assembly HelloWorld {}
-.module HelloWorld.exe
-.namespace Hello
-{
-  .class public auto ansi Program extends [mscorlib]System.Object
-  {
-    .method public static void Main() cil managed
-    {
-     .entrypoint
-     ldstr ""Hello World""
-     call void [mscorlib]System.Console::WriteLine(string)
-     ret
-    }
-  }
-}
-";
         [Fact]
         public void TestConstructingScannerWithNull()
         {
@@ -50,7 +32,7 @@ namespace Microsoft.Ilasm.Tests
         [Fact]
         public void TestScanningSample()
         {
-            Scanner scanner = new Scanner(sampleFile);
+            Scanner scanner = new Scanner(TestData.SampleFile);
             Assert.Equal(TokenType.Assembly, scanner.Token.TokenType);
             scanner.Scan();
             Assert.Equal(TokenType.Extern, scanner.Token.TokenType);
