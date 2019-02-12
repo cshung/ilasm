@@ -1,8 +1,7 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TokenType.cs" company="CompanyName">
-//     Company copyright tag.
+// <copyright file="TokenType.cs" company="PlaceholderCompany">
+//     Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-// <summary>This is the TokenType enumeration.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm
@@ -60,6 +59,6 @@ namespace Microsoft.Ilasm
         /// <summary>
         /// The class.
         /// </summary>
-        Class
+        Class,
     }
 }

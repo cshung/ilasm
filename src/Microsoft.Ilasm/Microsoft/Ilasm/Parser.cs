@@ -1,8 +1,7 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Parser.cs" company="CompanyName">
-//     Company copyright tag.
+// <copyright file="Parser.cs" company="PlaceholderCompany">
+//     Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-// <summary>This is the Parser class.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm

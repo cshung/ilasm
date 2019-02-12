@@ -1,8 +1,7 @@
 //-----------------------------------------------------------------------
-// <copyright file="Program.cs" company="CompanyName">
-//     Company copyright tag.
+// <copyright file="Program.cs" company="PlaceholderCompany">
+//     Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-// <summary>This is the Program class.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm
@@ -26,7 +25,7 @@ namespace Microsoft.Ilasm
         {
             PEHeaderBuilder header = new PEHeaderBuilder();
             MetadataBuilder metadata = new MetadataBuilder();
-            metadata.AddAssembly(metadata.GetOrAddString("HelloWorld"), new Version(), new StringHandle(), new BlobHandle(), (System.Reflection.AssemblyFlags)0, AssemblyHashAlgorithm.None);
+            metadata.AddAssembly(metadata.GetOrAddString("HelloWorld"), new Version(), default(StringHandle), default(BlobHandle), (System.Reflection.AssemblyFlags)0, AssemblyHashAlgorithm.None);
             MetadataRootBuilder metadataRootBuilder = new MetadataRootBuilder(metadata);
             BlobBuilder stream = new BlobBuilder();
             ManagedPEBuilder managedPEBuilder = new ManagedPEBuilder(header, metadataRootBuilder, stream);

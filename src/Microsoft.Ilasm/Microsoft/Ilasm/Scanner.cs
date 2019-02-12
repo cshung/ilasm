@@ -1,8 +1,7 @@
 //-----------------------------------------------------------------------
-// <copyright file="Scanner.cs" company="CompanyName">
-//     Company copyright tag.
+// <copyright file="Scanner.cs" company="PlaceholderCompany">
+//     Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-// <summary>This is the Scanner class.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm
@@ -128,7 +127,7 @@ namespace Microsoft.Ilasm
         /// </returns>
         private bool IsIdCharacter(char c)
         {
-            return ('0' <= c && c <= '9') || this.IsIdBeginCharacter(c);
+            return (c >= '0' && c <= '9') || this.IsIdBeginCharacter(c);
         }
 
         /// <summary>Determines whether [is identifier begin character] [the specified c].</summary>
@@ -138,7 +137,7 @@ namespace Microsoft.Ilasm
         /// </returns>
         private bool IsIdBeginCharacter(char c)
         {
-            return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || c == '_' || c == '$' || c == '@' || c == '`' || c == '?';
+            return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_' || c == '$' || c == '@' || c == '`' || c == '?';
         }
     }
 }

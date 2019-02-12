@@ -1,8 +1,7 @@
 //-----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="CompanyName">
-//     Company copyright tag.
+// <copyright file="AssemblyInfo.cs" company="PlaceholderCompany">
+//     Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-// <summary>This is the AssemblyInfo file.</summary>
 //-----------------------------------------------------------------------
 
 using System.Runtime.CompilerServices;

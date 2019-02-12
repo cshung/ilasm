@@ -1,8 +1,7 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Token.cs" company="CompanyName">
-//     Company copyright tag.
+// <copyright file="Token.cs" company="PlaceholderCompany">
+//     Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
-// <summary>This is the Token class.</summary>
 //-----------------------------------------------------------------------
 
 namespace Microsoft.Ilasm
