@@ -8,6 +8,7 @@
 namespace Microsoft.Ilasm
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// The parser.
@@ -35,7 +36,7 @@ namespace Microsoft.Ilasm
         }
 
         /// <summary>
-        /// Parses the decl.
+        /// Parses the non-terminal 'Decl'.
         /// </summary>
         internal void ParseDecl()
         {
@@ -52,7 +53,6 @@ namespace Microsoft.Ilasm
                         if (this.scanner.Token.TokenType == TokenType.Rbrace)
                         {
                             this.scanner.Scan();
-                            // Done - but how do I make this useful?
                         }
                         else
                         {
@@ -79,7 +79,6 @@ namespace Microsoft.Ilasm
                             if (this.scanner.Token.TokenType == TokenType.Rbrace)
                             {
                                 this.scanner.Scan();
-                                // Done - but how do I make this useful?
                             }
                             else
                             {
@@ -106,16 +105,25 @@ namespace Microsoft.Ilasm
             }
         }
 
+        /// <summary>
+        /// Parses the non-terminal 'AsmRefDecl'.
+        /// </summary>
         internal void ParseAsmRefDecl()
         {
             // TODO
         }
 
+        /// <summary>
+        /// Parses the non-terminal 'AsmDecl'.
+        /// </summary>
         internal void ParseAsmDecl()
         {
             // TODO
         }
 
+        /// <summary>
+        /// Parses the non-terminal 'DottedName'.
+        /// </summary>
         internal void ParseDottedName()
         {
             if (this.scanner.Token.TokenType == TokenType.Id)
