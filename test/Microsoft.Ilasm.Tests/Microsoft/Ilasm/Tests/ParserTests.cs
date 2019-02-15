@@ -26,15 +26,11 @@
         {
             Scanner scanner = new Scanner("a. b");
             Parser parser = new Parser(scanner);
-            bool thrown = false;
-            try
-            {
-                parser.ParseDottedName();
-            } catch (Exception)
-            {
-                thrown = true;
-            }
-            Assert.True(thrown);
+            parser.ParseDottedName();
+            Assert.Single(parser.Errors);
+            Assert.Equal(1, parser.Errors[0].Line);
+            Assert.Equal(4, parser.Errors[0].Column);
+            Assert.Equal("TODO: Localization", parser.Errors[0].Message);
         }
 
         [Fact]

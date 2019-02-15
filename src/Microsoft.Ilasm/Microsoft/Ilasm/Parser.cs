@@ -7,7 +7,7 @@
 namespace Microsoft.Ilasm
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The parser.
@@ -18,6 +18,11 @@ namespace Microsoft.Ilasm
         /// The scanner.
         /// </summary>
         private Scanner scanner;
+
+        /// <summary>
+        /// The list of errors collected during parsing.
+        /// </summary>
+        private List<Error> errors;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Parser"/> class.
@@ -32,7 +37,22 @@ namespace Microsoft.Ilasm
             }
 
             this.scanner = scanner;
-            this.scanner.Scan(isWhitespaceAccepted: true);
+            this.Scan(isWhitespaceAccepted: true);
+            this.errors = new List<Error>();
+        }
+
+        /// <summary>
+        /// Gets the errors.
+        /// </summary>
+        /// <value>
+        /// The errors.
+        /// </value>
+        public List<Error> Errors
+        {
+            get
+            {
+                return this.errors;
+            }
         }
 
         /// <summary>
@@ -42,17 +62,17 @@ namespace Microsoft.Ilasm
         {
             if (this.scanner.Token.TokenType == TokenType.Assembly)
             {
-                this.scanner.Scan(isWhitespaceAccepted: true);
+                this.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Id)
                 {
                     this.ParseDottedName();
                     if (this.scanner.Token.TokenType == TokenType.Lbrace)
                     {
-                        this.scanner.Scan(isWhitespaceAccepted: true);
+                        this.Scan(isWhitespaceAccepted: true);
                         this.ParseAsmDecl();
                         if (this.scanner.Token.TokenType == TokenType.Rbrace)
                         {
-                            this.scanner.Scan(isWhitespaceAccepted: true);
+                            this.Scan(isWhitespaceAccepted: true);
                         }
                         else
                         {
@@ -68,17 +88,17 @@ namespace Microsoft.Ilasm
                 }
                 else if (this.scanner.Token.TokenType == TokenType.Extern)
                 {
-                    this.scanner.Scan(isWhitespaceAccepted: true);
+                    this.Scan(isWhitespaceAccepted: true);
                     if (this.scanner.Token.TokenType == TokenType.Id)
                     {
                         this.ParseDottedName();
                         if (this.scanner.Token.TokenType == TokenType.Lbrace)
                         {
-                            this.scanner.Scan(isWhitespaceAccepted: true);
+                            this.Scan(isWhitespaceAccepted: true);
                             this.ParseAsmRefDecl();
                             if (this.scanner.Token.TokenType == TokenType.Rbrace)
                             {
-                                this.scanner.Scan(isWhitespaceAccepted: true);
+                                this.Scan(isWhitespaceAccepted: true);
                             }
                             else
                             {
@@ -128,10 +148,10 @@ namespace Microsoft.Ilasm
         {
             if (this.scanner.Token.TokenType == TokenType.Id)
             {
-                this.scanner.Scan(isWhitespaceAccepted: true);
+                this.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Dot)
                 {
-                    this.scanner.Scan(isWhitespaceAccepted: false);
+                    this.Scan(isWhitespaceAccepted: false);
                     this.ParseDottedName();
                 }
             }
@@ -139,6 +159,26 @@ namespace Microsoft.Ilasm
             {
                 // TODO, error reporting/recovery?
                 throw new Exception("6");
+            }
+        }
+
+        /// <summary>
+        /// Call Scan on the underlying scanner and skip all Error tokens.
+        /// </summary>
+        /// <param name="isWhitespaceAccepted">if set to <c>true</c> [is whitespace accepted].</param>
+        private void Scan(bool isWhitespaceAccepted)
+        {
+            while (true)
+            {
+                this.scanner.Scan(isWhitespaceAccepted);
+                if (this.scanner.Token.TokenType == TokenType.Error)
+                {
+                    this.Errors.Add(new Error(this.scanner.Line, this.scanner.Column, "TODO: Localization"));
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }
