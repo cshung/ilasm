@@ -20,7 +20,7 @@ namespace Microsoft.Ilasm
         private string text;
 
         /// <summary>
-        /// The position.
+        /// The index (to the string) to start scanning for the next token.
         /// </summary>
         private int position;
 
@@ -28,6 +28,16 @@ namespace Microsoft.Ilasm
         /// The token.
         /// </summary>
         private Token token;
+
+        /// <summary>
+        /// The line number of the next token.
+        /// </summary>
+        private int line;
+
+        /// <summary>
+        /// The column number of the next token.
+        /// </summary>
+        private int column;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scanner"/> class.
@@ -43,6 +53,8 @@ namespace Microsoft.Ilasm
 
             this.text = text;
             this.position = 0;
+            this.line = 1;
+            this.column = 1;
             this.token = null;
             this.Scan();
         }
@@ -62,18 +74,57 @@ namespace Microsoft.Ilasm
         }
 
         /// <summary>
+        /// Gets the line number of the next token.
+        /// </summary>
+        /// <value>
+        /// The line number of the next token.
+        /// </value>
+        internal int Line
+        {
+            get
+            {
+                return this.line;
+            }
+        }
+
+        /// <summary>
+        /// Gets the column number of the next token.
+        /// </summary>
+        /// <value>
+        /// The column number of the next token.
+        /// </value>
+        internal int Column
+        {
+            get
+            {
+                return this.column;
+            }
+        }
+
+
+        /// <summary>
         /// Scans this instance.
         /// </summary>
         internal void Scan()
         {
             while (this.position < this.text.Length && char.IsWhiteSpace(this.text[this.position]))
             {
+                if (this.text[this.position] == '\n')
+                {
+                    this.line++;
+                    this.column = 1;
+                }
+                else
+                {
+                    this.column++;
+                }
                 this.position++;
             }
 
             if (this.position == this.text.Length)
             {
                 this.token = new Token(this.text, TokenType.Eof, this.position, this.position);
+                return;
             }
 
             // It is important that these simple tokens are not prefix of each other
@@ -96,6 +147,7 @@ namespace Microsoft.Ilasm
                     {
                         this.token = new Token(this.text, pair.Key, this.position, this.position + keyword.Length);
                         this.position += keyword.Length;
+                        this.column += keyword.Length;
                         return;
                     }
                 }
@@ -105,6 +157,7 @@ namespace Microsoft.Ilasm
             {
                 this.token = new Token(this.text, TokenType.Dot, this.position, this.position + 1);
                 this.position += 1;
+                this.column += 1;
                 return;
             }
 
@@ -114,9 +167,11 @@ namespace Microsoft.Ilasm
                 do
                 {
                     this.position++;
+                    this.column++;
                 }
-                while (this.IsIdCharacter(this.text[this.position]));
+                while (this.position < this.text.Length && this.IsIdCharacter(this.text[this.position]));
                 this.token = new Token(this.text, TokenType.Id, beginPosition, this.position);
+                return;
             }
         }
 
