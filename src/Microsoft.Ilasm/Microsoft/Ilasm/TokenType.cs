@@ -60,5 +60,10 @@ namespace Microsoft.Ilasm
         /// The class.
         /// </summary>
         Class,
+
+        /// <summary>
+        /// The error.
+        /// </summary>
+        Error,
     }
 }

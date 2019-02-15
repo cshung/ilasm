@@ -32,6 +32,7 @@ namespace Microsoft.Ilasm
             }
 
             this.scanner = scanner;
+            this.scanner.Scan(isWhitespaceAccepted: true);
         }
 
         /// <summary>
@@ -41,17 +42,17 @@ namespace Microsoft.Ilasm
         {
             if (this.scanner.Token.TokenType == TokenType.Assembly)
             {
-                this.scanner.Scan();
+                this.scanner.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Id)
                 {
                     this.ParseDottedName();
                     if (this.scanner.Token.TokenType == TokenType.Lbrace)
                     {
-                        this.scanner.Scan();
+                        this.scanner.Scan(isWhitespaceAccepted: true);
                         this.ParseAsmDecl();
                         if (this.scanner.Token.TokenType == TokenType.Rbrace)
                         {
-                            this.scanner.Scan();
+                            this.scanner.Scan(isWhitespaceAccepted: true);
                         }
                         else
                         {
@@ -67,17 +68,17 @@ namespace Microsoft.Ilasm
                 }
                 else if (this.scanner.Token.TokenType == TokenType.Extern)
                 {
-                    this.scanner.Scan();
+                    this.scanner.Scan(isWhitespaceAccepted: true);
                     if (this.scanner.Token.TokenType == TokenType.Id)
                     {
                         this.ParseDottedName();
                         if (this.scanner.Token.TokenType == TokenType.Lbrace)
                         {
-                            this.scanner.Scan();
+                            this.scanner.Scan(isWhitespaceAccepted: true);
                             this.ParseAsmRefDecl();
                             if (this.scanner.Token.TokenType == TokenType.Rbrace)
                             {
-                                this.scanner.Scan();
+                                this.scanner.Scan(isWhitespaceAccepted: true);
                             }
                             else
                             {
@@ -127,12 +128,17 @@ namespace Microsoft.Ilasm
         {
             if (this.scanner.Token.TokenType == TokenType.Id)
             {
-                this.scanner.Scan();
+                this.scanner.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Dot)
                 {
-                    this.scanner.Scan();
+                    this.scanner.Scan(isWhitespaceAccepted: false);
                     this.ParseDottedName();
                 }
+            }
+            else
+            {
+                // TODO, error reporting/recovery?
+                throw new Exception("6");
             }
         }
     }

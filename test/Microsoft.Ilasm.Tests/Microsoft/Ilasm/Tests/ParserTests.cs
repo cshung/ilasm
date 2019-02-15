@@ -22,6 +22,22 @@
         }
 
         [Fact]
+        public void DottedNameWithSpace()
+        {
+            Scanner scanner = new Scanner("a. b");
+            Parser parser = new Parser(scanner);
+            bool thrown = false;
+            try
+            {
+                parser.ParseDottedName();
+            } catch (Exception)
+            {
+                thrown = true;
+            }
+            Assert.True(thrown);
+        }
+
+        [Fact]
         public void ParseSample()
         {
             Scanner scanner = new Scanner(TestData.SampleFile);

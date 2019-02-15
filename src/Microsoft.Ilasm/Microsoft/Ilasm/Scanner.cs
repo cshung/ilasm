@@ -56,7 +56,6 @@ namespace Microsoft.Ilasm
             this.line = 1;
             this.column = 1;
             this.token = null;
-            this.Scan();
         }
 
         /// <summary>
@@ -101,14 +100,15 @@ namespace Microsoft.Ilasm
             }
         }
 
-
         /// <summary>
-        /// Scans this instance.
+        /// Advance the scanner so that one more token is scanned.
         /// </summary>
-        internal void Scan()
+        /// <param name="isWhitespaceAccepted">if set to <c>true</c> [is whitespace accepted].</param>
+        internal void Scan(bool isWhitespaceAccepted)
         {
             while (this.position < this.text.Length && char.IsWhiteSpace(this.text[this.position]))
             {
+                int beginPosition = this.position;
                 if (this.text[this.position] == '\n')
                 {
                     this.line++;
@@ -118,7 +118,13 @@ namespace Microsoft.Ilasm
                 {
                     this.column++;
                 }
+
                 this.position++;
+                if (!isWhitespaceAccepted)
+                {
+                    this.token = new Token(this.text, TokenType.Error, beginPosition, this.position);
+                    return;
+                }
             }
 
             if (this.position == this.text.Length)
