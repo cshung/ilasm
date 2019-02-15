@@ -26,7 +26,7 @@
         {
             Scanner scanner = new Scanner("a. b");
             Parser parser = new Parser(scanner);
-            parser.ParseDottedName();
+            Assert.Equal("a.b", parser.ParseDottedName());
             Assert.Single(parser.Errors);
             Assert.Equal(1, parser.Errors[0].Line);
             Assert.Equal(4, parser.Errors[0].Column);

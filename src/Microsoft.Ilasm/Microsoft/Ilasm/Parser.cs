@@ -8,6 +8,7 @@ namespace Microsoft.Ilasm
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     /// <summary>
     /// The parser.
@@ -65,7 +66,7 @@ namespace Microsoft.Ilasm
                 this.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Id)
                 {
-                    this.ParseDottedName();
+                    string assemblyName = this.ParseDottedName();
                     if (this.scanner.Token.TokenType == TokenType.Lbrace)
                     {
                         this.Scan(isWhitespaceAccepted: true);
@@ -91,7 +92,7 @@ namespace Microsoft.Ilasm
                     this.Scan(isWhitespaceAccepted: true);
                     if (this.scanner.Token.TokenType == TokenType.Id)
                     {
-                        this.ParseDottedName();
+                        string assemblyReferenceName = this.ParseDottedName();
                         if (this.scanner.Token.TokenType == TokenType.Lbrace)
                         {
                             this.Scan(isWhitespaceAccepted: true);
@@ -144,15 +145,29 @@ namespace Microsoft.Ilasm
         /// <summary>
         /// Parses the non-terminal 'DottedName'.
         /// </summary>
-        internal void ParseDottedName()
+        /// <returns>The string representation of the dotted name.</returns>
+        internal string ParseDottedName()
+        {
+            StringBuilder dottedNameBuilder = new StringBuilder();
+            this.ParseDottedName(dottedNameBuilder);
+            return dottedNameBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Parses the non-terminal 'DottedName'.
+        /// </summary>
+        /// <param name="dottedNameBuilder">The dotted name builder.</param>
+        private void ParseDottedName(StringBuilder dottedNameBuilder)
         {
             if (this.scanner.Token.TokenType == TokenType.Id)
             {
+                dottedNameBuilder.Append(this.scanner.Token.TokenText);
                 this.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Dot)
-                {
+                { 
+                    dottedNameBuilder.Append(".");
                     this.Scan(isWhitespaceAccepted: false);
-                    this.ParseDottedName();
+                    this.ParseDottedName(dottedNameBuilder);
                 }
             }
             else
