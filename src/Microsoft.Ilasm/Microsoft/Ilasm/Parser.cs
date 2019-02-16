@@ -164,7 +164,7 @@ namespace Microsoft.Ilasm
                 dottedNameBuilder.Append(this.scanner.Token.TokenText);
                 this.Scan(isWhitespaceAccepted: true);
                 if (this.scanner.Token.TokenType == TokenType.Dot)
-                { 
+                {
                     dottedNameBuilder.Append(".");
                     this.Scan(isWhitespaceAccepted: false);
                     this.ParseDottedName(dottedNameBuilder);
