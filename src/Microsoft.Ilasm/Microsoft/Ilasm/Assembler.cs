@@ -18,6 +18,24 @@ namespace Microsoft.Ilasm
     /// </summary>
     internal class Assembler
     {
+        /*
+CHECK .assembly extern mscorlib {}
+CHECK .assembly HelloWorld {}
+CHECK .module HelloWorld.exe
+.namespace Hello
+{
+  .class public auto ansi Program extends [mscorlib]System.Object
+  {
+    .method public static void Main() cil managed
+    {
+     .entrypoint
+     ldstr ""Hello World""
+     call void [mscorlib]System.Console::WriteLine(string)
+     ret
+    }
+  }
+}
+         */
         /// <summary>
         /// Assembles this instance.
         /// </summary>
@@ -27,7 +45,9 @@ namespace Microsoft.Ilasm
             // TODO: Use the data generated from the parser instead of hard coding here
             PEHeaderBuilder header = new PEHeaderBuilder();
             MetadataBuilder metadata = new MetadataBuilder();
-            metadata.AddAssembly(metadata.GetOrAddString("HelloWorld"), new Version(), default(StringHandle), default(BlobHandle), (System.Reflection.AssemblyFlags)0, AssemblyHashAlgorithm.None);
+            AssemblyReferenceHandle mscorlib = metadata.AddAssemblyReference(metadata.GetOrAddString("mscorlib"), new Version(), default(StringHandle), default(BlobHandle), (System.Reflection.AssemblyFlags)0, default(BlobHandle));
+            AssemblyDefinitionHandle helloworldAssembly = metadata.AddAssembly(metadata.GetOrAddString("HelloWorld"), new Version(), default(StringHandle), default(BlobHandle), (System.Reflection.AssemblyFlags)0, AssemblyHashAlgorithm.None);
+            ModuleDefinitionHandle helloworldModule = metadata.AddModule(0, metadata.GetOrAddString("HelloWorld.exe"), metadata.GetOrAddGuid(Guid.NewGuid()), default(GuidHandle), default(GuidHandle));
             MetadataRootBuilder metadataRootBuilder = new MetadataRootBuilder(metadata);
             BlobBuilder stream = new BlobBuilder();
             ManagedPEBuilder managedPEBuilder = new ManagedPEBuilder(header, metadataRootBuilder, stream);
