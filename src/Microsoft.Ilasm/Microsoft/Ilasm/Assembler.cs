@@ -48,6 +48,14 @@ CHECK .module HelloWorld.exe
             AssemblyReferenceHandle mscorlib = metadata.AddAssemblyReference(metadata.GetOrAddString("mscorlib"), new Version(), default(StringHandle), default(BlobHandle), (System.Reflection.AssemblyFlags)0, default(BlobHandle));
             AssemblyDefinitionHandle helloworldAssembly = metadata.AddAssembly(metadata.GetOrAddString("HelloWorld"), new Version(), default(StringHandle), default(BlobHandle), (System.Reflection.AssemblyFlags)0, AssemblyHashAlgorithm.None);
             ModuleDefinitionHandle helloworldModule = metadata.AddModule(0, metadata.GetOrAddString("HelloWorld.exe"), metadata.GetOrAddGuid(Guid.NewGuid()), default(GuidHandle), default(GuidHandle));
+            EntityHandle objectClass = metadata.AddTypeReference(mscorlib, metadata.GetOrAddString("System"), metadata.GetOrAddString("Object"));
+            TypeDefinitionHandle programTypeDefinition = metadata.AddTypeDefinition(
+                TypeAttributes.Public | TypeAttributes.AutoClass | TypeAttributes.AnsiClass,
+                metadata.GetOrAddString("Hello"),
+                metadata.GetOrAddString("Program"),
+                objectClass,
+                MetadataTokens.FieldDefinitionHandle(1), // TODO: Why?
+                MetadataTokens.MethodDefinitionHandle(1));
             MetadataRootBuilder metadataRootBuilder = new MetadataRootBuilder(metadata);
             BlobBuilder stream = new BlobBuilder();
             ManagedPEBuilder managedPEBuilder = new ManagedPEBuilder(header, metadataRootBuilder, stream);
