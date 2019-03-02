@@ -75,6 +75,7 @@ CHECK }
                 metadata.GetOrAddString("Main"),
                 metadata.GetOrAddBlob(methodSignatureEncoder.Builder),
                 0, // TODO - one last thing (or not?) - we need to encode the method body
+                // We should use System.Reflection.Metadata.Ecma335.MethodBodyStreamEncoder
                 MetadataTokens.ParameterHandle(1));
 
             MetadataRootBuilder metadataRootBuilder = new MetadataRootBuilder(metadata);
